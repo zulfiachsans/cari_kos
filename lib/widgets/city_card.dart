@@ -5,6 +5,7 @@ import 'package:cari_kos/models/city.dart';
 class CityCard extends StatelessWidget {
   final City city;
 
+  // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
   CityCard(this.city);
 
   @override
@@ -14,6 +15,7 @@ class CityCard extends StatelessWidget {
       child: Container(
         height: 150,
         width: 120,
+        // ignore: prefer_const_constructors
         color: Color(0xffF6F7F8),
         child: Column(
           children: [
@@ -33,7 +35,9 @@ class CityCard extends StatelessWidget {
                           height: 30,
                           decoration: BoxDecoration(
                             color: purpleColor,
+                            // ignore: prefer_const_constructors
                             borderRadius: BorderRadius.only(
+                              // ignore: prefer_const_constructors
                               bottomLeft: Radius.circular(36),
                             ),
                           ),
@@ -49,6 +53,7 @@ class CityCard extends StatelessWidget {
                     : Container(),
               ],
             ),
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 11,
             ),

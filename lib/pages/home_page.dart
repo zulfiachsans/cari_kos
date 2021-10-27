@@ -1,5 +1,6 @@
 import 'package:cari_kos/models/space.dart';
 import 'package:cari_kos/models/tips.dart';
+import 'package:cari_kos/providers/space_provider.dart';
 import 'package:cari_kos/theme.dart';
 import 'package:cari_kos/widgets/bottom_navbar_item.dart';
 import 'package:cari_kos/widgets/city_card.dart';
@@ -7,10 +8,15 @@ import 'package:cari_kos/widgets/space_card.dart';
 import 'package:cari_kos/models/city.dart';
 import 'package:cari_kos/widgets/tips_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+// ignore: use_key_in_widget_constructors
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    var spaceProvider = Provider.of<SpaceProvider>(context);
+    spaceProvider.getRecommendedSpaces();
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -31,6 +37,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 2,
             ),
@@ -46,6 +53,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             // End haader
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 30,
             ),
@@ -60,14 +68,17 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 16,
             ),
+            // ignore: sized_box_for_whitespace
             Container(
               height: 150,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
+                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 24,
                   ),
@@ -78,6 +89,7 @@ class HomePage extends StatelessWidget {
                       imageUrl: 'assets/city1.png',
                     ),
                   ),
+                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -90,6 +102,7 @@ class HomePage extends StatelessWidget {
                       isPopular: true,
                     ),
                   ),
+                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -100,6 +113,7 @@ class HomePage extends StatelessWidget {
                       imageUrl: 'assets/city3.png',
                     ),
                   ),
+                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -110,6 +124,7 @@ class HomePage extends StatelessWidget {
                       imageUrl: 'assets/city4.png',
                     ),
                   ),
+                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -121,6 +136,7 @@ class HomePage extends StatelessWidget {
                       isPopular: true,
                     ),
                   ),
+                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -131,12 +147,14 @@ class HomePage extends StatelessWidget {
                       imageUrl: 'assets/city6.png',
                     ),
                   ),
+                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 24,
                   ),
                 ],
               ),
             ),
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 30,
             ),
@@ -152,6 +170,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 16,
             ),
@@ -159,50 +178,37 @@ class HomePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: edge,
               ),
-              child: Column(
-                children: [
-                  SpaceCard(
-                    Space(
-                      id: 1,
-                      name: 'Kuretakeso Hott',
-                      imageUrl: 'assets/space1.png',
-                      price: 52,
-                      city: 'Bandung',
-                      country: 'Germany',
-                      rating: 4,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  SpaceCard(
-                    Space(
-                      id: 2,
-                      name: 'Roemah Nenek',
-                      imageUrl: 'assets/space2.png',
-                      price: 11,
-                      city: 'Seattle',
-                      country: 'Bogor',
-                      rating: 5,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  SpaceCard(
-                    Space(
-                      id: 3,
-                      name: 'Darrling How',
-                      imageUrl: 'assets/space3.png',
-                      price: 20,
-                      city: 'Jakarta',
-                      country: 'Indonesia',
-                      rating: 3,
-                    ),
-                  ),
-                ],
+              child: FutureBuilder(
+                future: spaceProvider.getRecommendedSpaces(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Space>? data = snapshot.data as List<Space>?;
+
+                    int index = 0;
+
+                    return Column(
+                      children: data!.map((item) {
+                        index++;
+                        return Container(
+                          margin: EdgeInsets.only(
+                            top: index == 1 ? 0 : 30,
+                          ),
+                          child: SpaceCard(item),
+                        );
+                      }).toList(),
+                    );
+                  }
+
+                  // ignore: prefer_const_constructors
+                  return Center(
+                    // ignore: prefer_const_constructors
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
             ),
+
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 30,
             ),
@@ -218,6 +224,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 16,
             ),
@@ -235,6 +242,7 @@ class HomePage extends StatelessWidget {
                       updatedAt: '20 Apr',
                     ),
                   ),
+                  // ignore: prefer_const_constructors
                   SizedBox(
                     height: 20,
                   ),
@@ -262,6 +270,7 @@ class HomePage extends StatelessWidget {
           horizontal: edge,
         ),
         decoration: BoxDecoration(
+          // ignore: prefer_const_constructors
           color: Color(0xffF6F7F8),
           borderRadius: BorderRadius.circular(23),
         ),

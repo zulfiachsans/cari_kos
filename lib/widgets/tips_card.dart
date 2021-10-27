@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class TipsCard extends StatelessWidget {
   final Tips tips;
 
+  // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
   TipsCard(this.tips);
 
   @override
@@ -15,6 +16,7 @@ class TipsCard extends StatelessWidget {
           tips.imageUrl,
           width: 80,
         ),
+        // ignore: prefer_const_constructors
         SizedBox(
           width: 16,
         ),
@@ -27,6 +29,7 @@ class TipsCard extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
+            // ignore: prefer_const_constructors
             SizedBox(
               height: 4,
             ),
@@ -36,6 +39,7 @@ class TipsCard extends StatelessWidget {
             ),
           ],
         ),
+        // ignore: prefer_const_constructors
         Spacer(),
         IconButton(
           onPressed: () {},

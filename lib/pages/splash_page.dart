@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cari_kos/pages/home_page.dart';
 import 'package:cari_kos/theme.dart';
 import 'package:flutter/material.dart';
 
+// ignore: use_key_in_widget_constructors
 class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,7 @@ class SplashPage extends StatelessWidget {
               ),
             ),
             Padding(
+              // ignore: unused_local_variable
               padding: EdgeInsets.only(
                 top: 50,
                 left: 50,
@@ -54,9 +58,11 @@ class SplashPage extends StatelessWidget {
                   SizedBox(
                     height: 40,
                   ),
+                  // ignore: sized_box_for_whitespace
                   Container(
                     width: 210,
                     height: 50,
+                    // ignore: deprecated_member_use
                     child: RaisedButton(
                       color: purpleColor,
                       onPressed: () {
