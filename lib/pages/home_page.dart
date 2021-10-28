@@ -1,6 +1,5 @@
 import 'package:cari_kos/models/space.dart';
 import 'package:cari_kos/models/tips.dart';
-import 'package:cari_kos/providers/space_provider.dart';
 import 'package:cari_kos/theme.dart';
 import 'package:cari_kos/widgets/bottom_navbar_item.dart';
 import 'package:cari_kos/widgets/city_card.dart';
@@ -14,9 +13,6 @@ import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    var spaceProvider = Provider.of<SpaceProvider>(context);
-    spaceProvider.getRecommendedSpaces();
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -53,7 +49,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             // End haader
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 30,
             ),
@@ -178,33 +173,51 @@ class HomePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: edge,
               ),
-              child: FutureBuilder(
-                future: spaceProvider.getRecommendedSpaces(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<Space>? data = snapshot.data as List<Space>?;
-
-                    int index = 0;
-
-                    return Column(
-                      children: data!.map((item) {
-                        index++;
-                        return Container(
-                          margin: EdgeInsets.only(
-                            top: index == 1 ? 0 : 30,
-                          ),
-                          child: SpaceCard(item),
-                        );
-                      }).toList(),
-                    );
-                  }
-
-                  // ignore: prefer_const_constructors
-                  return Center(
-                    // ignore: prefer_const_constructors
-                    child: CircularProgressIndicator(),
-                  );
-                },
+              child: Column(
+                children: [
+                  SpaceCard(
+                    Space(
+                      id: 1,
+                      name: 'Kuretakeso Hott',
+                      imageUrl: 'assets/space1.png',
+                      price: 52,
+                      city: 'Bandung',
+                      country: 'Germany',
+                      rating: 4,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  SpaceCard(
+                    Space(
+                      id: 1,
+                      name: 'Kuretakeso Hott',
+                      imageUrl: 'assets/space2.png',
+                      price: 52,
+                      city: 'Bandung',
+                      country: 'Germany',
+                      rating: 4,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  SpaceCard(
+                    Space(
+                      id: 1,
+                      name: 'Kuretakeso Hott',
+                      imageUrl: 'assets/space3.png',
+                      price: 52,
+                      city: 'Bandung',
+                      country: 'Germany',
+                      rating: 4,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ],
               ),
             ),
 
