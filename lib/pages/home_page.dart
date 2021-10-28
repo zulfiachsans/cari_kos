@@ -231,7 +231,7 @@ class HomePage extends StatelessWidget {
                 left: edge,
               ),
               child: Text(
-                'Tips & Guidance',
+                'Tips',
                 style: regularTextStyle.copyWith(
                   fontSize: 16,
                 ),
