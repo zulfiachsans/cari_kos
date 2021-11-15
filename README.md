@@ -1,6 +1,7 @@
 # cari_kos
 
-A new Flutter project.
+Aplikasi yang bertujuan untuk pencarian kos disekitar anda
+![kos](https://buildwithangga.com/storage/assets/portfolio/GqwKIdDtSv046wukbGIIqsmutAjWlyYAWfx09Dl3.png)
 
 ## Getting Started
 
