@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+
 import 'package:cari_kos/models/space.dart';
 import 'package:cari_kos/models/tips.dart';
+import 'package:cari_kos/providers/space_provider.dart';
 import 'package:cari_kos/theme.dart';
 import 'package:cari_kos/widgets/bottom_navbar_item.dart';
 import 'package:cari_kos/widgets/city_card.dart';
@@ -11,21 +14,23 @@ import 'package:provider/provider.dart';
 
 // ignore: use_key_in_widget_constructors
 class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    var spaceProvider = Provider.of<SpaceProvider>(context);
+
     return Scaffold(
+      backgroundColor: whiteColor,
       body: SafeArea(
-        bottom: false,
         child: ListView(
           children: [
             SizedBox(
               height: edge,
             ),
-            // NOTE: Header
+            // NOTE: Header/Title
             Padding(
-              padding: EdgeInsets.only(
-                left: edge,
-              ),
+              padding: EdgeInsets.only(left: edge),
               child: Text(
                 'Explore Now',
                 style: blackTextStyle.copyWith(
@@ -33,14 +38,11 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 2,
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: edge,
-              ),
+              padding: EdgeInsets.only(left: edge),
               child: Text(
                 'Mencari kosan yang cozy',
                 style: greyTextStyle.copyWith(
@@ -48,14 +50,12 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            // End haader
             SizedBox(
               height: 30,
             ),
+            // NOTE: Popular Cities
             Padding(
-              padding: EdgeInsets.only(
-                left: edge,
-              ),
+              padding: EdgeInsets.only(left: edge),
               child: Text(
                 'Popular Cities',
                 style: regularTextStyle.copyWith(
@@ -63,17 +63,14 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 16,
             ),
-            // ignore: sized_box_for_whitespace
             Container(
               height: 150,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 24,
                   ),
@@ -84,12 +81,10 @@ class HomePage extends StatelessWidget {
                       imageUrl: 'assets/city1.png',
                     ),
                   ),
-                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
                   CityCard(
-                    // NOTE: Popular City
                     City(
                       id: 2,
                       name: 'Bandung',
@@ -97,7 +92,6 @@ class HomePage extends StatelessWidget {
                       isPopular: true,
                     ),
                   ),
-                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -108,7 +102,6 @@ class HomePage extends StatelessWidget {
                       imageUrl: 'assets/city3.png',
                     ),
                   ),
-                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -119,7 +112,6 @@ class HomePage extends StatelessWidget {
                       imageUrl: 'assets/city4.png',
                     ),
                   ),
-                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -131,7 +123,6 @@ class HomePage extends StatelessWidget {
                       isPopular: true,
                     ),
                   ),
-                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 20,
                   ),
@@ -142,22 +133,18 @@ class HomePage extends StatelessWidget {
                       imageUrl: 'assets/city6.png',
                     ),
                   ),
-                  // ignore: prefer_const_constructors
                   SizedBox(
                     width: 24,
                   ),
                 ],
               ),
             ),
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 30,
             ),
-            // NOTE: Recommended place
+            // NOTE: Recomended Space
             Padding(
-              padding: EdgeInsets.only(
-                left: edge,
-              ),
+              padding: EdgeInsets.only(left: edge),
               child: Text(
                 'Recommended Space',
                 style: regularTextStyle.copyWith(
@@ -165,113 +152,80 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 16,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: edge,
-              ),
-              child: Column(
-                children: [
-                  SpaceCard(
-                    Space(
-                      id: 1,
-                      name: 'Kuretakeso Hott',
-                      imageUrl: 'assets/space1.png',
-                      price: 52,
-                      city: 'Bandung',
-                      country: 'Germany',
-                      rating: 4,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  SpaceCard(
-                    Space(
-                      id: 1,
-                      name: 'Kuretakeso Hott',
-                      imageUrl: 'assets/space2.png',
-                      price: 52,
-                      city: 'Bandung',
-                      country: 'Germany',
-                      rating: 4,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  SpaceCard(
-                    Space(
-                      id: 1,
-                      name: 'Kuretakeso Hott',
-                      imageUrl: 'assets/space3.png',
-                      price: 52,
-                      city: 'Bandung',
-                      country: 'Germany',
-                      rating: 4,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                ],
+              padding: EdgeInsets.symmetric(horizontal: edge),
+              child: FutureBuilder(
+                future: spaceProvider.getRecommendedSpaces(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    List<Space> data = snapshot.data;
+
+                    int index = 0;
+
+                    return Column(
+                      children: data.map((item) {
+                        index++;
+                        return Container(
+                          margin: EdgeInsets.only(top: index == 1 ? 0 : 30),
+                          child: SpaceCard(item),
+                        );
+                      }).toList(),
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
             ),
-
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 30,
             ),
-            // NOTE: TIPS & GUIDANCE
             Padding(
-              padding: EdgeInsets.only(
-                left: edge,
-              ),
+              padding: EdgeInsets.only(left: edge),
               child: Text(
-                'Tips',
+                'Tips & Guidance',
                 style: regularTextStyle.copyWith(
                   fontSize: 16,
                 ),
               ),
             ),
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 16,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: edge,
-              ),
+              padding: EdgeInsets.only(left: edge),
               child: Column(
                 children: [
                   TipsCard(
                     Tips(
                       id: 1,
-                      title: 'City Guidelines',
+                      name: 'City Guidelines',
                       imageUrl: 'assets/tips1.png',
-                      updatedAt: '20 Apr',
+                      date: 20,
+                      month: 'Apr',
                     ),
                   ),
-                  // ignore: prefer_const_constructors
                   SizedBox(
                     height: 20,
                   ),
                   TipsCard(
                     Tips(
                       id: 2,
-                      title: 'Jakarta Fairship',
+                      name: 'Jakarta Fairship',
                       imageUrl: 'assets/tips2.png',
-                      updatedAt: '11 Dec',
+                      date: 11,
+                      month: 'Dec',
                     ),
                   ),
                 ],
               ),
             ),
             SizedBox(
-              height: 100 + edge,
+              height: 50 + (edge * 2),
             ),
           ],
         ),
@@ -283,7 +237,6 @@ class HomePage extends StatelessWidget {
           horizontal: edge,
         ),
         decoration: BoxDecoration(
-          // ignore: prefer_const_constructors
           color: Color(0xffF6F7F8),
           borderRadius: BorderRadius.circular(23),
         ),

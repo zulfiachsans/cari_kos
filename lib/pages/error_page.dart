@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cari_kos/pages/home_page.dart';
 import 'package:cari_kos/theme.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,6 @@ class ErrorPage extends StatelessWidget {
                 'assets/error.png',
                 width: 300,
               ),
-              // ignore: prefer_const_constructors
               SizedBox(
                 height: 70,
               ),
@@ -27,7 +28,6 @@ class ErrorPage extends StatelessWidget {
                   fontSize: 24,
                 ),
               ),
-              // ignore: prefer_const_constructors
               SizedBox(
                 height: 14,
               ),
@@ -38,7 +38,6 @@ class ErrorPage extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              // ignore: prefer_const_constructors
               SizedBox(
                 height: 50,
               ),

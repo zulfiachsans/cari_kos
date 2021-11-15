@@ -1,13 +1,15 @@
 class Tips {
-  late int id;
-  late String title;
-  late String imageUrl;
-  late String updatedAt;
+  int id;
+  String name;
+  String imageUrl;
+  int date;
+  String month;
 
   Tips({
     required this.id,
+    required this.name,
     required this.imageUrl,
-    required this.title,
-    required this.updatedAt,
+    required this.date,
+    required this.month,
   });
 }

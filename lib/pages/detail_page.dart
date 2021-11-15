@@ -1,19 +1,30 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, sized_box_for_whitespace, deprecated_member_use, prefer_const_constructors_in_immutables, non_constant_identifier_names
+import 'package:cari_kos/models/space.dart';
 import 'package:cari_kos/theme.dart';
 import 'package:cari_kos/widgets/facility_item.dart';
+import 'package:cari_kos/widgets/rating_item.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'error_page.dart';
 
-// ignore: use_key_in_widget_constructors
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
+  final Space space;
+
+  DetailPage(this.space);
+
+  @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  bool isClicked = false;
+
   @override
   Widget build(BuildContext context) {
     launchUrl(String url) async {
       if (await canLaunch(url)) {
         launch(url);
       } else {
-        // throw (url);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -23,30 +34,62 @@ class DetailPage extends StatelessWidget {
       }
     }
 
+    Future<void> ShowConfirmation() async {
+      return showDialog(
+        context: context,
+        builder: (BuildContext contex) {
+          return AlertDialog(
+            title: Text(
+              'Konfirmasi',
+            ),
+            content: SingleChildScrollView(
+              child: ListBody(
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  Text('Apakah kamu ingin menghubungi pemilik kos?'),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Batal'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  launchUrl('tel:${widget.space.phone}');
+                },
+                child: Text('Hubungi'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
-        bottom: false,
         child: Stack(
           children: [
-            Image.asset(
-              'assets/thumbnail.png',
+            Image.network(
+              widget.space.imageUrl,
               width: MediaQuery.of(context).size.width,
               height: 350,
               fit: BoxFit.cover,
             ),
             ListView(
               children: [
-                // ignore: prefer_const_constructors
                 SizedBox(
                   height: 328,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    // ignore: prefer_const_constructors
                     borderRadius: BorderRadius.vertical(
-                      // ignore: prefer_const_constructors
                       top: Radius.circular(20),
                     ),
                     color: whiteColor,
@@ -54,14 +97,11 @@ class DetailPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 30,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: edge,
-                        ),
+                        padding: EdgeInsets.symmetric(horizontal: edge),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -69,18 +109,15 @@ class DetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Kuretakeso Hott',
-                                  style: blackTextStyle.copyWith(
-                                    fontSize: 22,
-                                  ),
+                                  widget.space.name,
+                                  style: blackTextStyle.copyWith(fontSize: 22),
                                 ),
-                                // ignore: prefer_const_constructors
                                 SizedBox(
                                   height: 2,
                                 ),
                                 Text.rich(
                                   TextSpan(
-                                    text: '\$52',
+                                    text: '\$${widget.space.price}',
                                     style: purpleTextStyle.copyWith(
                                       fontSize: 16,
                                     ),
@@ -97,50 +134,19 @@ class DetailPage extends StatelessWidget {
                               ],
                             ),
                             Row(
-                              children: [
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                // ignore: prefer_const_constructors
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                // ignore: prefer_const_constructors
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                // ignore: prefer_const_constructors
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                // ignore: prefer_const_constructors
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                  color: greyColor,
-                                ),
-                              ],
+                              children: [1, 2, 3, 4, 5].map((index) {
+                                return Container(
+                                  margin: EdgeInsets.only(left: 2),
+                                  child: RatingItem(
+                                    index: index,
+                                    rating: widget.space.rating,
+                                  ),
+                                );
+                              }).toList(),
                             ),
                           ],
                         ),
                       ),
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 30,
                       ),
@@ -154,37 +160,32 @@ class DetailPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 12,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: edge,
-                        ),
+                        padding: EdgeInsets.symmetric(horizontal: edge),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             FacilityItem(
-                              name: 'kitchen',
                               imageUrl: 'assets/icon_kitchen.png',
-                              total: 2,
+                              name: 'kitchen',
+                              total: widget.space.numberOfKitchens,
                             ),
                             FacilityItem(
-                              name: 'bedroom',
                               imageUrl: 'assets/icon_bedroom.png',
-                              total: 3,
+                              name: 'bedroom',
+                              total: widget.space.numberOfBedrooms,
                             ),
                             FacilityItem(
-                              name: 'Big Lemari',
                               imageUrl: 'assets/icon_cupboard.png',
-                              total: 3,
-                              // total: widget.space.numberOfCupboards,
+                              name: 'cupboard',
+                              total: widget.space.numberOfCupboards,
                             ),
                           ],
                         ),
                       ),
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 30,
                       ),
@@ -197,52 +198,29 @@ class DetailPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 12,
                       ),
-                      // ignore: sized_box_for_whitespace
                       Container(
                         height: 88,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: [
-                            SizedBox(
-                              width: edge,
-                            ),
-                            Image.asset(
-                              'assets/photo1.png',
-                              width: 110,
-                              height: 88,
-                              fit: BoxFit.cover,
-                            ),
-                            // ignore: prefer_const_constructors
-                            SizedBox(
-                              height: 18,
-                            ),
-                            Image.asset(
-                              'assets/photo2.png',
-                              width: 110,
-                              height: 88,
-                              fit: BoxFit.cover,
-                            ),
-                            // ignore: prefer_const_constructors
-                            SizedBox(
-                              width: 18,
-                            ),
-                            Image.asset(
-                              'assets/photo3.png',
-                              width: 110,
-                              height: 88,
-                              fit: BoxFit.cover,
-                            ),
-                            SizedBox(
-                              width: edge,
-                            ),
-                          ],
+                          children: widget.space.photos.map((item) {
+                            return Container(
+                              margin: EdgeInsets.only(left: 24),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.network(
+                                  item,
+                                  width: 110,
+                                  height: 88,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 30,
                       ),
@@ -255,24 +233,25 @@ class DetailPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 6,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: edge,
-                        ),
+                        padding: EdgeInsets.symmetric(horizontal: edge),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Jln. Kappan Sukses No. 20 \n Palembang',
-                              style: greyTextStyle,
+                              '${widget.space.address}\n${widget.space.city}',
+                              style: regularTextStyle.copyWith(
+                                color: Color(0xff7A7E86),
+                              ),
                             ),
                             InkWell(
                               onTap: () {
-                                launchUrl('https://unimma.ac.id/');
+                                // launchUrl(
+                                //     'https://www.google.co.id/maps/place/Balai+Desa+Rejo+Mulyo/@-5.6344785,105.6607427,15z/data=!4m13!1m7!3m6!1s0x2e41043709c55121:0x4dc41b2a48fdf49a!2sRejo+Mulyo,+Palas,+Kabupaten+Lampung+Selatan,+Lampung!3b1!8m2!3d-5.6351504!4d105.6705801!3m4!1s0x2e410540f59493ff:0x7f24ae40e191fb9c!8m2!3d-5.6387077!4d105.6695697');
+                                launchUrl(widget.space.mapUrl);
                               },
                               child: Image.asset(
                                 'assets/btn_map.png',
@@ -282,34 +261,27 @@ class DetailPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 40,
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: edge,
-                        ),
+                        margin: EdgeInsets.symmetric(horizontal: edge),
                         height: 50,
                         width: MediaQuery.of(context).size.width - (2 * edge),
-                        // ignore: deprecated_member_use
                         child: RaisedButton(
                           onPressed: () {
-                            launchUrl('tel:+6285715928302');
+                            ShowConfirmation();
                           },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(17),
-                          ),
                           color: purpleColor,
                           child: Text(
                             'Book Now',
-                            style: whiteTextStyle.copyWith(
-                              fontSize: 18,
-                            ),
+                            style: whiteTextStyle.copyWith(fontSize: 18),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(17),
                           ),
                         ),
                       ),
-                      // ignore: prefer_const_constructors
                       SizedBox(
                         height: 40,
                       ),
@@ -335,9 +307,18 @@ class DetailPage extends StatelessWidget {
                       width: 40,
                     ),
                   ),
-                  Image.asset(
-                    'assets/btn_wishlist.png',
-                    width: 40,
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        isClicked = !isClicked;
+                      });
+                    },
+                    child: Image.asset(
+                      isClicked
+                          ? 'assets/btn_wishlist_filed.png'
+                          : 'assets/btn_wishlist.png',
+                      width: 40,
+                    ),
                   ),
                 ],
               ),

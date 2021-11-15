@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors, sized_box_for_whitespace, prefer_const_constructors
+
 import 'package:cari_kos/models/tips.dart';
 import 'package:cari_kos/theme.dart';
 import 'package:flutter/material.dart';
@@ -5,18 +7,23 @@ import 'package:flutter/material.dart';
 class TipsCard extends StatelessWidget {
   final Tips tips;
 
-  // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
   TipsCard(this.tips);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(
-          tips.imageUrl,
+        Container(
           width: 80,
+          height: 80,
+          child: Stack(
+            children: [
+              Image.asset(
+                tips.imageUrl,
+              ),
+            ],
+          ),
         ),
-        // ignore: prefer_const_constructors
         SizedBox(
           width: 16,
         ),
@@ -24,30 +31,25 @@ class TipsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              tips.title,
-              style: blackTextStyle.copyWith(
-                fontSize: 18,
-              ),
+              tips.name,
+              style: blackTextStyle.copyWith(fontSize: 18),
             ),
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 4,
             ),
             Text(
-              'Updated ${tips.updatedAt}',
+              'Updated ${tips.date} ${tips.month}',
               style: greyTextStyle,
             ),
           ],
         ),
-        // ignore: prefer_const_constructors
         Spacer(),
         IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.chevron_right,
-            color: greyColor,
-          ),
-        ),
+            onPressed: () {},
+            icon: Icon(
+              Icons.chevron_right,
+              color: greenColor,
+            )),
       ],
     );
   }
