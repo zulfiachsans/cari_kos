@@ -249,8 +249,8 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                             InkWell(
                               onTap: () {
-                                // launchUrl(
-                                //     'https://www.google.co.id/maps/place/Balai+Desa+Rejo+Mulyo/@-5.6344785,105.6607427,15z/data=!4m13!1m7!3m6!1s0x2e41043709c55121:0x4dc41b2a48fdf49a!2sRejo+Mulyo,+Palas,+Kabupaten+Lampung+Selatan,+Lampung!3b1!8m2!3d-5.6351504!4d105.6705801!3m4!1s0x2e410540f59493ff:0x7f24ae40e191fb9c!8m2!3d-5.6387077!4d105.6695697');
+                                launchUrl(
+                                    'https://www.google.co.id/maps/place/Balai+Desa+Rejo+Mulyo/@-5.6344785,105.6607427,15z/data=!4m13!1m7!3m6!1s0x2e41043709c55121:0x4dc41b2a48fdf49a!2sRejo+Mulyo,+Palas,+Kabupaten+Lampung+Selatan,+Lampung!3b1!8m2!3d-5.6351504!4d105.6705801!3m4!1s0x2e410540f59493ff:0x7f24ae40e191fb9c!8m2!3d-5.6387077!4d105.6695697');
                                 launchUrl(widget.space.mapUrl);
                               },
                               child: Image.asset(
