@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "312546395724",
+    "project_id": "carikos-83396",
+    "storage_bucket": "carikos-83396.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312546395724:android:4aff70f771c8ce916a16e9",
+        "android_client_info": {
+          "package_name": "com.example.cari_kos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312546395724-9n7t2rciqmr4pnb672a33k3sm1t6ll3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpdVfm6bll3kAGcfqV347tfaxdpPf2WSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312546395724-9n7t2rciqmr4pnb672a33k3sm1t6ll3r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
